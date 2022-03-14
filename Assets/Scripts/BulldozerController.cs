@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulldozerController : MonoBehaviour
+public class BulldozerController : VehicleController
 {
     private const string HORIZONTAL = "Horizontal";
     private const string VERTICAL = "Vertical";
@@ -18,12 +18,16 @@ public class BulldozerController : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        active = false;
     }
 
     private void FixedUpdate()
     {
-        GetInput();
-        HandleMovement();
+        if (active)
+        {
+            GetInput();
+            HandleMovement();
+        }
     }
 
 

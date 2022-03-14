@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ForkliftController : MonoBehaviour
+public class ForkliftController : VehicleController
 {
     private const string HORIZONTAL = "Horizontal";
     private const string VERTICAL = "Vertical";
@@ -15,6 +15,7 @@ public class ForkliftController : MonoBehaviour
     private bool isBreaking;
 
     private Rigidbody rb;
+
 
     [SerializeField] private float motorForce;
     [SerializeField] private float maxSpeed;
@@ -35,13 +36,17 @@ public class ForkliftController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.centerOfMass = new Vector3(0, -0.9f, 0);
+        active = false;
     }
     private void FixedUpdate()
     {
-        GetInput();
-        HandleMotor();
-        HandleSteering();
-        UpdateWheels();
+        if (active)
+        {
+            GetInput();
+            HandleMotor();
+            HandleSteering();
+            UpdateWheels();
+        }
     }
 
     private void GetInput()

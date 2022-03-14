@@ -40,6 +40,8 @@ public class ForkliftLauncher : MonoBehaviour
 		{
 			loadTrigger.Unload();
 			trashBox = Instantiate(prefab, loadTrigger.target.transform.position, Quaternion.identity);
+			trashBox.transform.tag = "ReadyTrashBox";
+			trashBox.layer = 8;
 			trashBox.GetComponent<Rigidbody>().velocity = CalculateLaunchData().initialVelocity;
 			trashBox = null;
 

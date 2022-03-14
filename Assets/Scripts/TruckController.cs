@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TruckController : MonoBehaviour
+public class TruckController : VehicleController
 {
     private const string HORIZONTAL = "Horizontal";
     private const string VERTICAL = "Vertical";
@@ -14,7 +14,11 @@ public class TruckController : MonoBehaviour
     private float currentBreakForce;
     private bool isBreaking;
 
+    private Rigidbody rb;
+
+
     [SerializeField] private float motorForce;
+    [SerializeField] private int maxSpeed;
     [SerializeField] private float breakForce;
     [SerializeField] private float maxSteerAngle;
 
@@ -28,20 +32,23 @@ public class TruckController : MonoBehaviour
     [SerializeField] private Transform frontRightWheelTransform;
     [SerializeField] private Transform backLeftWheelTransform;
     [SerializeField] private Transform backRightWheelTransform;
-    private void Start()
+
+
+    private void Awake()
     {
-        this.GetComponent<Rigidbody>().centerOfMass = new Vector3(0, -0.9f, 0);
-    }
-    private void Update()
-    {
-        Debug.Log(currentBreakForce);
+        rb = GetComponent<Rigidbody>();
+        rb.centerOfMass = new Vector3(0, -0.9f, 0);
+        active = false;
     }
     private void FixedUpdate()
     {
-        GetInput();
-        HandleMotor();
-        HandleSteering();
-        UpdateWheels();
+        if (active)
+        {
+            GetInput();
+            HandleMotor();
+            HandleSteering();
+            UpdateWheels();
+        }
     }
 
     private void GetInput()
@@ -58,9 +65,12 @@ public class TruckController : MonoBehaviour
         frontRightWheelCollider.motorTorque = verticalInput * motorForce;
         currentBreakForce = isBreaking ? breakForce : 0f;
 
+        if (rb.velocity.magnitude > maxSpeed)
+        {
+            currentBreakForce = breakForce;
+        }
 
-          
-          ApplyBreaking();
+        ApplyBreaking();
     }
 
     private void ApplyBreaking()
