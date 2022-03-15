@@ -7,16 +7,15 @@ public class TruckCargo : MonoBehaviour
     [SerializeField] private TextMesh text;
 
     [HideInInspector] public int cargoAmount = 0;
+    private AudioSource audioSource;
+    [SerializeField] private AudioClip crash;
+    [SerializeField] private AudioClip bag;
 
     void Start()
     {
-        
+        audioSource = GetComponent<AudioSource>();
     }
 
-    void Update()
-    {
-        
-    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.transform.CompareTag("ReadyTrashBox") && cargoAmount < 5)
@@ -24,6 +23,14 @@ public class TruckCargo : MonoBehaviour
             cargoAmount++;
             text.text = cargoAmount + "/5";
             Destroy(other.gameObject);
+            audioSource.clip= bag;
+            audioSource.Play();
         }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        audioSource.clip = crash;
+        audioSource.Play();
     }
 }

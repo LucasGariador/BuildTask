@@ -36,7 +36,7 @@ public class TruckController : VehicleController
     [SerializeField] private Transform backRightWheelTransform;
 
 
-    private void Awake()
+    private void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.centerOfMass = new Vector3(0, -0.9f, 0);

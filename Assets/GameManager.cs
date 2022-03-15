@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,6 +12,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Gizmo check3;
     [SerializeField] private Gizmo check4;
     [SerializeField] private DirectionCheck directionCheck;
+    [SerializeField] private GameObject nextLevel;
+
+    [SerializeField] private string nextLevelName;
 
     private void Update()
     {
@@ -18,6 +23,23 @@ public class GameManager : MonoBehaviour
             Debug.Log("Win!!");
             truckController.active = false;
             truckController.Stop();
+            nextLevel.SetActive(true);
         }
     }
+
+    public void StartNextLevel()
+    {
+        StartCoroutine(LoadYourAsyncScene());
+    }
+
+    IEnumerator LoadYourAsyncScene()
+    {
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(nextLevelName);
+
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
+    }
+
 }

@@ -12,8 +12,11 @@ public class CameraFollow : MonoBehaviour
 
     private void FixedUpdate()
     {
-        HandleTranslation();
-        HandleRotation();
+        if (target != null)
+        {
+            HandleTranslation();
+            HandleRotation();
+        }
     }
 
     private void HandleTranslation()

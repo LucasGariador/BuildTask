@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private VehicleController truck;
     private CameraFollow cameraF;
 
-    void Start()
+    public void StartGame()
     {
         cameraF = Camera.main.gameObject.GetComponent<CameraFollow>();
         truck.active = true;
