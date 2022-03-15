@@ -13,6 +13,8 @@ public class TruckController : VehicleController
     private float currentSteerAngle;
     private float currentBreakForce;
     private bool isBreaking;
+    private CameraFollow cameraF;
+    private float camZOffset;
 
     private Rigidbody rb;
 
@@ -39,6 +41,8 @@ public class TruckController : VehicleController
         rb = GetComponent<Rigidbody>();
         rb.centerOfMass = new Vector3(0, -0.9f, 0);
         active = false;
+        cameraF = Camera.main.GetComponent<CameraFollow>();
+        camZOffset = cameraF.offset.z;
     }
     private void FixedUpdate()
     {
@@ -65,6 +69,15 @@ public class TruckController : VehicleController
         frontRightWheelCollider.motorTorque = verticalInput * motorForce;
         currentBreakForce = isBreaking ? breakForce : 0f;
 
+        if(verticalInput < 0)
+        {
+            cameraF.offset.z = -camZOffset;
+        }
+        else if(verticalInput > 0)
+        {
+            cameraF.offset.z = camZOffset;
+        }
+
         if (rb.velocity.magnitude > maxSpeed)
         {
             currentBreakForce = breakForce;
@@ -79,6 +92,11 @@ public class TruckController : VehicleController
         frontRightWheelCollider.brakeTorque = currentBreakForce;
         backLeftWheelCollider.brakeTorque = currentBreakForce;
         backRightWheelCollider.brakeTorque = currentBreakForce;
+    }
+
+    public void Stop()
+    {
+        rb.velocity = Vector3.zero;
     }
 
     private void HandleSteering()

@@ -17,13 +17,13 @@ public class TruckCargo : MonoBehaviour
     {
         
     }
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.transform.CompareTag("ReadyTrashBox") && cargoAmount < 5)
+        if (other.transform.CompareTag("ReadyTrashBox") && cargoAmount < 5)
         {
             cargoAmount++;
             text.text = cargoAmount + "/5";
-            Destroy(collision.gameObject);
+            Destroy(other.gameObject);
         }
     }
 }

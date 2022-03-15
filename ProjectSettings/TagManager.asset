@@ -7,16 +7,17 @@ TagManager:
   - Trash
   - TrashBox
   - ReadyTrashBox
+  - Check
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - PickUpBox
   - Water
   - UI
   - Trash
   - AvoidTrash
-  - 
+  - TrashBox
   - 
   - 
   - 
