@@ -543,7 +543,7 @@ PrefabInstance:
       objectReference: {fileID: 817014280}
     - target: {fileID: 4655857118435462219, guid: e19103b2b3198db4e8a6dd620906df5b, type: 3}
       propertyPath: nextLevelName
-      value: Level 4
+      value: Level4
       objectReference: {fileID: 0}
     - target: {fileID: 4655857118435462219, guid: e19103b2b3198db4e8a6dd620906df5b, type: 3}
       propertyPath: directionCheck
